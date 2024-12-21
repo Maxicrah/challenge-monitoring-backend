@@ -1,5 +1,7 @@
 package ar.com.maxi.challengemonitoring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +18,8 @@ public class Plant {
     private Long id;
     private String country;
     private String name;
-    private Integer readings;
     @OneToMany(mappedBy = "plant")
+    @JsonManagedReference
     private List<Alert> alerts;
 
 }

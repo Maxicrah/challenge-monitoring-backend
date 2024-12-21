@@ -1,6 +1,7 @@
 package ar.com.maxi.challengemonitoring.model;
 
 import ar.com.maxi.challengemonitoring.enums.AlertType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +20,6 @@ public class Alert {
     private AlertType alertType;
     @ManyToOne
     @JoinColumn(name = "id_plant")
+    @JsonBackReference
     private Plant plant;
 }
