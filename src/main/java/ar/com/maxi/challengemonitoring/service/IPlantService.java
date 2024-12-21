@@ -11,6 +11,6 @@ public interface IPlantService {
     Plant findPlantById(Long id);
     void deletePlantById(Long id);
     List<Plant> findAllPlants();
-    PlantDTO updatePlantById(PlantDTO plant, Long id);
+    Plant updatePlantById(PlantDTO plant, Long id);
 
 }

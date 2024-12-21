@@ -51,13 +51,12 @@ public class PlantService implements IPlantService {
         return this.plantRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     @Override
     public void deletePlantById(Long id) {
-        if(plantRepository.existsById(id)){
-            this.plantRepository.deleteById(id);
-        }else{
-            throw new RuntimeException("Plant not found");
-        }
+        Plant plant = this.findPlantById(id);
+        this.alertRepository.deleteAll(plant.getAlerts());
+        this.plantRepository.delete(plant);
     }
 
     @Override
@@ -65,8 +64,46 @@ public class PlantService implements IPlantService {
         return this.plantRepository.findAll();
     }
 
+    @Transactional
     @Override
-    public PlantDTO updatePlantById(PlantDTO plant, Long id) {
-        return null;
+    public Plant updatePlantById(PlantDTO plantDto, Long id) {
+        Plant existingPlant = this.findPlantById(id);
+        boolean alertUpdated = false;
+        if (existingPlant == null) {
+            throw new RuntimeException("plant not found with id: " + id);
+        }
+        List<Alert> alerts = existingPlant.getAlerts();
+
+        if(alerts == null || alerts.isEmpty()){
+            throw new RuntimeException("alerts empty");
+        }
+
+        for (Alert alert : alerts) {
+            if (alert.getAlertType() == plantDto.getAlertType()) {
+                alert.setQuantity(plantDto.getQuantityAlert());
+                alertUpdated = true;
+                break;
+            }
+        }
+
+        if(!alertUpdated){
+            throw new RuntimeException("alerts not found");
+        }
+        //code para añadir alerta
+//        if (!alertUpdated) {
+//            Alert newAlert = new Alert();
+//            newAlert.setQuantity(plantDto.getQuantityAlert());
+//            newAlert.setAlertType(plantDto.getAlertType());
+//            newAlert.setPlant(existingPlant);
+//            this.alertRepository.save(newAlert);
+//
+//            if (existingPlant.getAlerts() == null) {
+//                existingPlant.setAlerts(new ArrayList<>());
+//            }
+//            existingPlant.getAlerts().add(newAlert);
+//        }
+
+        return this.plantRepository.save(existingPlant);
     }
+
 }
