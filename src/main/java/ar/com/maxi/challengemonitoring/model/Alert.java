@@ -17,6 +17,7 @@ public class Alert {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer quantity;
+    @Enumerated(EnumType.STRING)
     private AlertType alertType;
     @ManyToOne
     @JoinColumn(name = "id_plant")
