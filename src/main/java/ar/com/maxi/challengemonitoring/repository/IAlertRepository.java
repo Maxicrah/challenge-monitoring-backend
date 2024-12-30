@@ -16,7 +16,7 @@ public interface IAlertRepository extends JpaRepository<Alert, Long> {
     @Query("SELECT a FROM Alert a WHERE a.alertType = :type")
     List<Alert> findAlertByType(AlertType type);
 
-    @Query("SELECT COUNT(a) FROM Alert a WHERE a.alertType = :alertType")
-    Long countByAlertType(AlertType alertType);
+    @Query("SELECT SUM(a.quantity) FROM Alert a WHERE a.alertType = :type")
+    Long countByAlertType(AlertType type);
 
 }

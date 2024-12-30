@@ -1,6 +1,8 @@
 package ar.com.maxi.challengemonitoring.service.imp;
 
+import ar.com.maxi.challengemonitoring.dto.AlertDTO;
 import ar.com.maxi.challengemonitoring.dto.PlantDTO;
+import ar.com.maxi.challengemonitoring.enums.AlertType;
 import ar.com.maxi.challengemonitoring.model.Alert;
 import ar.com.maxi.challengemonitoring.model.Plant;
 import ar.com.maxi.challengemonitoring.repository.IAlertRepository;
@@ -28,20 +30,18 @@ public class PlantService implements IPlantService {
         Plant plant = new Plant();
         plant.setName(plantDto.getName());
         plant.setCountry(plantDto.getCountry());
+        List<Alert> alerts = new ArrayList<>();
 
-        if(plantDto.getQuantityAlert()== null && plantDto.getAlertType() == null){
-            throw new RuntimeException("Invalid");
+        for (AlertType alertType : AlertType.values()) {
+            Alert alert = new Alert();
+            alert.setQuantity(0);
+            alert.setAlertType(alertType);
+            alert.setPlant(plant);
+            alerts.add(alert);
         }
+        this.alertRepository.saveAll(alerts);
 
-        Alert alert = new Alert();
-        alert.setQuantity(plantDto.getQuantityAlert());
-        alert.setAlertType(plantDto.getAlertType());
-        alert.setPlant(plant);
-        this.alertRepository.save(alert);
-        if (plant.getAlerts() == null) {
-            plant.setAlerts(new ArrayList<>());
-        }
-        plant.getAlerts().add(alert);
+        plant.setAlerts(alerts);
 
         return this.plantRepository.save(plant);
     }
@@ -66,44 +66,26 @@ public class PlantService implements IPlantService {
 
     @Transactional
     @Override
-    public Plant updatePlantById(PlantDTO plantDto, Long id) {
-        Plant existingPlant = this.findPlantById(id);
-        boolean alertUpdated = false;
-        if (existingPlant == null) {
+    public Plant updateQuantityAlertsForPlantById(Long id, List<AlertDTO> alerts){
+        Plant plant = this.findPlantById(id);
+
+        if (plant == null) {
             throw new RuntimeException("plant not found with id: " + id);
         }
-        List<Alert> alerts = existingPlant.getAlerts();
 
-        if(alerts == null || alerts.isEmpty()){
-            throw new RuntimeException("alerts empty");
+        List<Alert> plantAlerts = plant.getAlerts();
+
+        if (plantAlerts == null || plantAlerts.isEmpty()) {
+            throw new RuntimeException("no alerts found for plant with id: " + id);
         }
-
-        for (Alert alert : alerts) {
-            if (alert.getAlertType() == plantDto.getAlertType()) {
-                alert.setQuantity(plantDto.getQuantityAlert());
-                alertUpdated = true;
-                break;
+        for (Alert alert : plantAlerts) {
+            for (AlertDTO alertDto : alerts) {
+                if (alert.getAlertType() == alertDto.getAlertType()) {
+                    alert.setQuantity(alertDto.getQuantityAlert());
+                }
             }
         }
-
-        if(!alertUpdated){
-            throw new RuntimeException("alerts not found");
-        }
-        //code para añadir alerta
-//        if (!alertUpdated) {
-//            Alert newAlert = new Alert();
-//            newAlert.setQuantity(plantDto.getQuantityAlert());
-//            newAlert.setAlertType(plantDto.getAlertType());
-//            newAlert.setPlant(existingPlant);
-//            this.alertRepository.save(newAlert);
-//
-//            if (existingPlant.getAlerts() == null) {
-//                existingPlant.setAlerts(new ArrayList<>());
-//            }
-//            existingPlant.getAlerts().add(newAlert);
-//        }
-
-        return this.plantRepository.save(existingPlant);
+        return this.plantRepository.save(plant);
     }
 
 }

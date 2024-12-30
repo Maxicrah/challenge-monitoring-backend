@@ -5,6 +5,7 @@ import ar.com.maxi.challengemonitoring.service.IAlertService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/alert")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class AlertController {
 
     private final IAlertService alertService;
@@ -45,35 +47,35 @@ public class AlertController {
 
 
     @GetMapping("/count/high")
-    public ResponseEntity<Map<String, Long>> getCountHighAlerts() {
+    public ResponseEntity<Long> getCountHighAlerts() {
         Long highAlerts = this.alertService.countHighAlerts();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of(
-                "high alerts: ", highAlerts
-        ));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                highAlerts
+        );
     }
 
     @GetMapping("/count/medium")
-    public ResponseEntity<Map<String, Long>> getCountMediumAlerts() {
+    public ResponseEntity<Long> getCountMediumAlerts() {
         Long mediumAlerts = this.alertService.countMediumAlerts();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of(
-                "medium alerts: ", mediumAlerts
-        ));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                mediumAlerts
+        );
     }
 
     @GetMapping("/count/reading-ok")
-    public ResponseEntity<Map<String,Long>> getCountReadingsOkAlerts() {
+    public ResponseEntity<Long> getCountReadingsOkAlerts() {
         Long readingsOk = this.alertService.countReadingsOk();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of(
-                "readings ok: ", readingsOk
-        ));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                 readingsOk
+        );
     }
 
     @GetMapping("/count/sensors-disabled")
-    public ResponseEntity<Map<String, Long>> getCountSensorsDisabledAlerts() {
+    public ResponseEntity<Long> getCountSensorsDisabledAlerts() {
         Long sensorsDisabledAlerts = this.alertService.countSensorsDisabled();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of(
-                "sensors disabled: ", sensorsDisabledAlerts
-        ));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                sensorsDisabledAlerts
+        );
     }
 
 }
