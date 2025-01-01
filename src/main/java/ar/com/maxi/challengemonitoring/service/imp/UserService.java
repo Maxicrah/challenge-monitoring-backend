@@ -64,4 +64,9 @@ public class UserService implements IUserService {
     public List<User> findAllUsers() {
         return this.userRepository.findAll();
     }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return this.userRepository.findByEmail(email).orElse(null);
+    }
 }
