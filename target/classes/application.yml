@@ -9,6 +9,9 @@ spring:
     url: jdbc:mysql://bysq3i6lpnew1opkbhw8-mysql.services.clever-cloud.com:3306/bysq3i6lpnew1opkbhw8?serverTimezone=UTC
     username: ukbybxml9kwesw6r
     password: 4lckJDnsm0sQxYJRgXit
+    hikari:
+      maximum-pool-size: 2
+      minimum-idle: 1
 server:
   port: 8080
 
