@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/alert")
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://monitoring-challenge-9ecd5.web.app"})
 public class AlertController {
 
     private final IAlertService alertService;

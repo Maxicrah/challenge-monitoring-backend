@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://monitoring-challenge-9ecd5.web.app"})
 public class UserController {
 
     private final IUserService userService;

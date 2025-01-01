@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://monitoring-challenge-9ecd5.web.app")
 public class CountryController {
 
     private final CountryApiService countryApiService;
