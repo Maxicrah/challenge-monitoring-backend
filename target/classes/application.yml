@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: challenge-monitoring-backend
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    url: jdbc:mysql://bysq3i6lpnew1opkbhw8-mysql.services.clever-cloud.com:3306/bysq3i6lpnew1opkbhw8?serverTimezone=UTC
+    username: ukbybxml9kwesw6r
+    password: 4lckJDnsm0sQxYJRgXit
+server:
+  port: 8080
+
+country:
+    key: 23ccb13f27mshe6c0e58bcf6f918p19c88ajsn41187f044f27

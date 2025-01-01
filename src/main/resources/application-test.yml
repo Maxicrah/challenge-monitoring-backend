@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: challenge-monitoring-backend-test
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_monitoring?serverTimezone=UTC
+    username: root
+    password:
+
+country:
+  key: 23ccb13f27mshe6c0e58bcf6f918p19c88ajsn41187f044f27
+
+server:
+  port: 8088
