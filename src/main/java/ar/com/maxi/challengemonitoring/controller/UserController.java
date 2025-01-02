@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = {"https://monitoring-challenge-nx92c2dud-maximilianos-projects-a55ff8fb.vercel.app"})
+@CrossOrigin(origins = {"https://monitoring-challenge.vercel.app"})
 public class UserController {
 
     private final IUserService userService;

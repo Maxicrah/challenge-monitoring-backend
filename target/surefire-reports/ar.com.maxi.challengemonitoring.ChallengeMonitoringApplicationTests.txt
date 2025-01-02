@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ar.com.maxi.challengemonitoring.ChallengeMonitoringApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 43.09 s -- in ar.com.maxi.challengemonitoring.ChallengeMonitoringApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 53.47 s -- in ar.com.maxi.challengemonitoring.ChallengeMonitoringApplicationTests
